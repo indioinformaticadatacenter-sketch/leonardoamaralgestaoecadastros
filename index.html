@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gestão Leonardo Amaral</title>
+<link rel="icon" type="image/png" href="https://www.tcepi.tc.br/wp-content/uploads/2024/10/gestorweb1-2-300x300.png" sizes="32x32">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+:root{--laranja:#FF6A00;--borda:#1e1f24}
+*{box-sizing:border-box}
+html,body{height:100%;height:100dvh;margin:0;padding:0;overflow:hidden!important}
+body{background:#080808;color:#fff;font-family:Inter,system-ui,sans-serif;display:flex;flex-direction:column}
+.login-wrapper{height:100vh;height:100dvh;overflow:auto;display:flex;align-items:center;justify-content:center;padding:16px}
+.card-login{background:#111214;border:1px solid var(--borda);border-radius:22px;padding:20px;min-height:390px;display:flex;flex-direction:column;justify-content:space-between}
+.card-login.adm{border-top:3px solid #0d6efd}.card-login.cliente{border-top:3px solid var(--laranja)}
+.painel{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden!important}
+.header-site{background:#111214;border-bottom:1px solid var(--borda);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;flex-shrink:0}
+.p-3.pb-1{flex-shrink:0}
+.baia{flex:1;overflow-y:auto!important;overflow-x:hidden;margin:12px;border:1px solid var(--borda);border-radius:16px;background:#111214;min-height:0}
+.baia::-webkit-scrollbar{width:8px}.baia::-webkit-scrollbar-thumb{background:var(--laranja);border-radius:10px}
+.table-dark thead th{position:sticky;top:0;background:#080808!important;z-index:5;font-size:11px;text-transform:uppercase}
+.img-thumb{width:46px;height:46px;object-fit:cover;border-radius:10px;border:2px solid var(--laranja);cursor:pointer;flex-shrink:0}.img-comp{width:38px;height:38px;object-fit:cover;border-radius:8px;border:1px solid #0d6efd;cursor:pointer;margin:2px}
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:99999;justify-content:center;align-items:center;flex-direction:column;padding:10px}
+#lightbox.show{display:flex} #lightboxImg{max-width:90vw;max-height:60vh;border-radius:16px;border:2px solid var(--laranja);transition:transform.2s}
+.card-status{background:#111214;border:1px solid var(--borda);border-radius:14px;padding:10px;display:flex;gap:8px;align-items:center;min-height:64px}
+.dado-adm{border:1px solid #2a2a2e;padding:12px 14px;border-radius:12px;background:#0a0a0a;color:#fff;display:block;margin-bottom:8px;font-size:13px;line-height:1.5;word-break:break-word}
+.dado-adm b{color:#FF6A00;display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.modal-content{background:#121315!important;border:1px solid var(--borda)!important;border-radius:18px!important}.form-control,.form-select{background:#0a0a0b!important;color:#fff!important;border:1px solid #222!important;border-radius:10px!important;font-size:15px}
+.section-title{background:linear-gradient(90deg, rgba(255,106,0,.15), transparent);border-left:3px solid var(--laranja);padding:8px 12px;font-weight:700;margin-top:18px;margin-bottom:10px;border-radius:0 10px 10px 0;font-size:12px;text-transform:uppercase;color:#fff}
+@keyframes neonPulse{0%{box-shadow:0 0 8px var(--laranja)}100%{box-shadow:0 0 18px var(--laranja),0 0 30px rgba(255,106,0,.7)}}
+tr.neon-found{outline:2px solid var(--laranja)!important;animation:neonPulse 1.2s infinite alternate;background:rgba(255,106,0,.08)!important}
+#busca.neon-active{border-color:var(--laranja)!important;box-shadow:0 0 0 3px rgba(255,106,0,.25),0 0 18px rgba(255,106,0,.5)!important}
+.mobile-cards{padding:12px}.card-cliente-mobile{background:#0e0f11;border:1px solid #222;border-radius:16px;padding:14px;margin-bottom:12px}
+@media(max-width:768px){.table-responsive-desktop{display:none!important}.mobile-cards{display:block!important}.baia{margin:8px;-webkit-overflow-scrolling:touch}}
+@media(min-width:769px){.table-responsive-desktop{display:block}.mobile-cards{display:none!important}}
+@media print{body *{visibility:hidden}#areaImpressao,#areaImpressao *{visibility:visible}#areaImpressao{position:absolute;left:0;top:0;width:210mm;padding:12mm;background:#fff;color:#000}.no-print{display:none!important}}
+</style>
+</head>
+<body>
+<script>const PLANILHA_URL = "https://script.google.com/macros/s/AKfycbx5TiLMTT8TGwTlwiRSqmg5_LoAiLcQGm5ldd96MSbBHz_3j9L89sXbnBiQKGm2P5Vd/exec";</script>
+<div id="lightbox"><div class="position-absolute top-0 end-0 m-2 d-flex gap-2"><button class="btn btn-light btn-sm" onclick="zoomLb(0.2)">+</button><button class="btn btn-light btn-sm" onclick="zoomLb(-0.2)">-</button><button class="btn btn-danger btn-sm" onclick="fecharLb()">X</button></div><div class="d-flex align-items-center gap-2 justify-content-center"><button id="btnAnt" class="btn btn-warning btn-sm rounded-pill" onclick="navLb(-1)"><i class="bi bi-chevron-left"></i></button><img id="lightboxImg" src=""><button id="btnProx" class="btn btn-warning btn-sm rounded-pill" onclick="navLb(1)"><i class="bi bi-chevron-right"></i></button></div><div class="mt-2 text-center"><span id="zoomL" class="badge bg-dark border">100%</span> <span id="contLb" class="badge bg-primary ms-2"></span><br><small id="infoLb" class="text-white-50"></small><div id="miniLb" class="d-flex gap-2 mt-2 flex-wrap justify-content-center"></div></div></div>
+<div id="telaLogin" class="login-wrapper"><div style="max-width:900px;width:100%"><h3 class="text-center fw-bold mb-2"><span style="color:#FF6A00">GESTÃO</span> LEONARDO AMARAL</h3><p class="text-center text-secondary mb-3" style="font-size:11px">Serviços Funerários Proficionais - Cachoeira do Ararí - Pará</p><div class="row g-3 justify-content-center"><div class="col-12 col-md-5"><div class="card-login adm text-center"><div><span class="badge bg-primary mb-2" style="font-size:10px">Visualização</span><h5>Admin</h5><small class="text-secondary">Login de Informações</small></div><div><input id="uAdm" class="form-control mb-2 bg-black text-white" value="" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('pAdm').focus();}"><input id="pAdm" type="password" class="form-control mb-2 bg-black text-white" value="" onkeydown="if(event.key==='Enter'){event.preventDefault();fazerLogin('adm');}"><button class="btn btn-primary w-100 mt-2" onclick="fazerLogin('adm')">ENTRAR</button></div></div></div><div class="col-12 col-md-5"><div class="card-login cliente text-center"><div><span class="badge mb-2" style="background:#FF6A00;font-size:10px">Cadastro</span><h5>leonardo</h5><small class="text-secondary">Login de Gestão e Cadastro de Clientes</small></div><div><input id="uCli" class="form-control mb-2 bg-black text-white" value="" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('pCli').focus();}"><input id="pCli" type="password" class="form-control mb-2 bg-black text-white" value="" onkeydown="if(event.key==='Enter'){event.preventDefault();fazerLogin('cliente');}"><button class="btn w-100 mt-2 text-white" style="background:#FF6A00" onclick="fazerLogin('cliente')">ENTRAR</button></div></div></div></div></div></div>
+<div id="painel" class="painel d-none"><div class="header-site"><div class="d-flex gap-2 align-items-center"><div style="width:36px;height:36px;background:#FF6A00;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800">LA</div><div><h5 id="titPainel" class="m-0 fw-bold" style="font-size:15px">PAINEL</h5><small id="subTit" class="text-secondary" style="font-size:9px">Imprimir A4</small></div></div><div class="d-flex gap-2 align-items-center"><span id="badgeSync" class="badge bg-dark border rounded-pill" style="font-size:8px">Offline</span><button id="btnNovo" class="btn btn-sm text-white rounded-pill px-3" style="background:#FF6A00" onclick="abrirNovo()">+ Novo</button><button class="btn btn-dark btn-sm border rounded-pill" onclick="location.reload()">Sair</button></div></div><div class="p-3 pb-1"><div class="row g-2 mb-2"><div class="col-6 col-md-2"><div class="card-status"><i class="bi bi-people-fill"></i><div><small class="text-secondary" style="font-size:10px">Total</small><h4 id="tTotal" class="m-0">0</h4></div></div></div><div class="col-6 col-md-2"><div class="card-status"><i class="bi bi-check-circle-fill text-success"></i><div><small class="text-success" style="font-size:10px">Concretizado</small><h4 id="tConc" class="m-0 text-success">0</h4></div></div></div><div class="col-6 col-md-2"><div class="card-status"><i class="bi bi-hourglass-split text-warning"></i><div><small class="text-warning" style="font-size:10px">Aguardando</small><h4 id="tAguard" class="m-0 text-warning">0</h4></div></div></div><div class="col-6 col-md-3"><div class="card-status"><i class="bi bi-currency-dollar text-primary"></i><div><small class="text-primary" style="font-size:10px">Pagos</small><h4 id="tPagos" class="m-0 text-primary">0</h4></div></div></div><div class="col-12 col-md-3"><div class="card-status"><i class="bi bi-exclamation-triangle-fill text-danger"></i><div><small class="text-danger" style="font-size:10px">Inadimplente</small><h4 id="tInad" class="m-0 text-danger">0</h4></div></div></div></div><div class="d-flex gap-2 align-items-center mt-2"><div style="flex:1;max-width:400px"><input id="busca" class="form-control rounded-pill ps-3" placeholder="🔍 Buscar nome/CPF..." oninput="render()"></div><span id="contadorBusca" class="badge bg-dark border"></span><button id="btnLimparBusca" class="btn btn-sm btn-dark border rounded-pill d-none" onclick="$('busca').value='';render()">Limpar x</button></div></div><div class="baia" id="baiaLista"><div class="table-responsive-desktop"><table class="table table-dark table-hover text-center align-middle mb-0" style="min-width:900px"><thead><tr><th>Foto</th><th>Titular / CPF / Nasc / Cad</th><th>Venc/Valor</th><th>Situação</th><th>Pago</th><th>Comprovantes</th><th>Ação</th></tr></thead><tbody id="tabela"></tbody></table></div><div id="cardsMobile" class="mobile-cards"></div></div></div>
+<div class="modal fade" id="modalCad" tabindex="-1"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content" id="modalContent"><div class="modal-header border-0"><h5 id="titModal">Cadastro</h5><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><div id="viewAdm" class="d-none"></div><form id="formCad"><input type="hidden" id="fId"><input type="hidden" id="fFotoUrl"><input type="hidden" id="fFotoId"><input type="hidden" id="fCompsJson"><div class="row g-2"><div class="col-6 col-md-3"><label class="small">Tipo Cliente</label><select id="fTipo" class="form-select"><option>Pessoa Física</option><option>CNPJ</option></select></div><div class="col-6 col-md-3"><label class="small">Situação</label><select id="fSitu" class="form-select"><option>Concretizada</option><option>Aguardando Confirmação</option></select></div><div class="col-6 col-md-3"><label class="small">Canal</label><select id="fCanal" class="form-select"><option>Presencial</option><option>Online</option></select></div><div class="col-6 col-md-3"><label class="small">Vendedor</label><input id="fVend" class="form-control"></div><div class="col-12 col-md-6"><label class="small">Nome *</label><input id="fNome" class="form-control" required></div><div class="col-6 col-md-3"><label class="small">RG</label><input id="fRG" class="form-control"></div><div class="col-6 col-md-3"><label class="small">CPF *</label><input id="fCpf" class="form-control" required></div><div class="col-6 col-md-3"><label class="small">Nascimento</label><input id="fNasc" type="date" class="form-control"></div><div class="col-6 col-md-3"><label class="small">Data Cadastro</label><input id="fCad" type="date" class="form-control"></div><div class="col-12 col-md-3"><label class="small">Email *</label><input id="fEmail" type="email" class="form-control" required></div><div class="col-12 col-md-3"><label class="small">Zap</label><input id="fZap" class="form-control"></div><div class="col-12 col-md-5"><label class="small">Endereço</label><input id="fEnd" class="form-control"></div><div class="col-6 col-md-2"><label class="small">Comp</label><input id="fComplemento" class="form-control"></div><div class="col-6 col-md-2"><label class="small">Bairro</label><input id="fBairro" class="form-control"></div><div class="col-6 col-md-2"><label class="small">Cidade</label><input id="fCid" class="form-control"></div><div class="col-6 col-md-1"><label class="small">UF</label><input id="fUF" class="form-control" maxlength="2"></div><div class="col-12 col-md-5"><label class="small">Dia Venc (1-31) *</label><div class="input-group"><input id="fVenc" type="number" min="1" max="31" class="form-control" required><button type="button" id="btnTesteEmail" class="btn btn-warning rounded-end fw-bold" style="font-size:11px" onclick="testarEmailCobranca()"><i class="bi bi-envelope-check"></i> Imail/Cobrança</button></div><small id="statusEmail" class="text-secondary" style="font-size:9px">Email elegante</small></div><div class="col-6 col-md-2"><label class="small">Valor</label><input id="fValor" type="number" step="0.01" class="form-control"></div><div class="col-6 col-md-2"><label class="small">Tipo Pag</label><select id="fTipoPag" class="form-select"><option>À vista</option><option>Parcelado</option></select></div><div class="col-6 col-md-1"><label class="small">Forma</label><select id="fFormaPag" class="form-select"><option>Pix</option><option>Boleto</option><option>Carnê</option><option>Cartão</option></select></div><div class="col-6 col-md-2"><label class="small">Dep até 5</label><select id="fQtdDep" class="form-select" onchange="gerarDeps()"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div></div><div id="areaDeps" class="mt-2"></div><div class="mt-3"><label class="small">Foto</label><input id="fFotoFile" type="file" class="form-control mb-2" accept="image/*"><div id="prevFoto"></div><label class="small mt-2">Comprovantes</label><input id="fCompFile" type="file" class="form-control mb-2" accept="image/*" multiple><div id="prevComps" class="d-flex flex-wrap gap-2"></div><div id="listaComps" class="mt-3"></div></div><div class="mt-3"><label class="small">Observação final</label><textarea id="fObs" class="form-control" rows="3"></textarea><div class="mt-2 d-flex gap-2"><button type="button" class="btn btn-light rounded-pill px-4 fw-bold" onclick="imprimirFicha(document.getElementById('fId').value)"><i class="bi bi-printer-fill"></i> Imprimir Ficha</button><small class="text-secondary" style="font-size:10px">Suporte: indioinformaticaoficial@gmail.com</small></div></div></form></div><div class="modal-footer border-0 flex-wrap"><button class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Fechar</button><button id="btnSalvar" class="btn text-white rounded-pill" style="background:#FF6A00" onclick="salvar()">Salvar</button></div></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let modo='normal', clientes=[], gal=[], idxGaleria=0, zoomV=1, compsTemp=[], fotoB64=null, intervaloSync=null, ultimoJson='';
+const $ = id => document.getElementById(id);
+const getModal = () => bootstrap.Modal.getOrCreateInstance(document.getElementById('modalCad'));
+function getUrl(){ return (typeof PLANILHA_URL!=='undefined'?PLANILHA_URL:'').trim(); }
+function normalizaData(v){ if(!v) return ''; v=String(v).trim(); if(!v) return ''; if(v.includes('T')){ try{ return v.split('T')[0]; }catch(e){} } if(v.match(/^\d{4}-\d{2}-\d{2}$/)) return v; if(v.match(/^\d{2}\/\d{2}\/\d{4}$/)){ let p=v.split('/'); return `${p[2]}-${p[1]}-${p[0]}`; } if(v.match(/^\d{2}-\d{2}-\d{4}$/)){ let p=v.split('-'); return `${p[2]}-${p[1]}-${p[0]}`; } try{ let d=new Date(v); if(!isNaN(d.getTime())) return d.toISOString().split('T')[0]; }catch(e){} return v; }
+function formataBR(iso){ if(!iso) return '-'; try{ let p=String(iso).split('-'); if(p.length===3) return `${p[2]}/${p[1]}/${p[0]}`; }catch(e){} return iso; }
+function fazerLogin(tipo){ const uAdm=$('uAdm').value.trim(), pAdm=$('pAdm').value.trim(), uCli=$('uCli').value.trim(), pCli=$('pCli').value.trim(); if(tipo==='adm'){ if(!(uAdm==='Admin' && pAdm==='@adm321')){ alert('Login Inválido!'); return; } modo='adm'; $('titPainel').innerText='PAINEL DE CADASTRO'; $('subTit').innerText='Painel de Clientes'; $('btnNovo').style.display='none'; $('btnSalvar').style.display='none'; } else{ if(!(uCli==='leonardo' && pCli==='@thayllon20')){ alert('Login Inválido!'); return; } modo='cliente'; $('titPainel').innerText='PAINEL DE CADASTRO CABO LÉO'; $('subTit').innerText='Painel de Clientes'; $('btnNovo').style.display='inline-block'; $('btnSalvar').style.display='inline-block'; } $('telaLogin').classList.add('d-none'); $('painel').classList.remove('d-none'); sincronizarInicial(); if(intervaloSync) clearInterval(intervaloSync); intervaloSync = setInterval(()=>{ syncSilencioso(); }, 5000); }
+async function sincronizarInicial(){const url=getUrl(); if(!url||!url.includes('script.google.com')){ $('badgeSync').innerText='Offline'; carregarLocal(); return; }try{ const r=await fetch(url+'?action=listar',{method:'GET',redirect:'follow'}); const data=await r.json(); if(Array.isArray(data)){ clientes=converterDados(data); localStorage.setItem('clientes_final', JSON.stringify(clientes)); ultimoJson=JSON.stringify(data); render(); $('badgeSync').innerText='Sinc: '+clientes.length; } }catch(e){ carregarLocal(); $('badgeSync').innerText='Offline'; }}
+async function syncSilencioso(){const url=getUrl(); if(!url||!url.includes('script.google.com')) return; if(document.getElementById('modalCad').classList.contains('show')) return; try{ const r=await fetch(url+'?action=listar',{method:'GET',redirect:'follow',cache:'no-store'}); const data=await r.json(); if(!Array.isArray(data)) return; const jsonAtual=JSON.stringify(data); if(jsonAtual===ultimoJson) return; ultimoJson=jsonAtual; clientes=converterDados(data); localStorage.setItem('clientes_final', JSON.stringify(clientes)); const termo=($('busca').value||'').trim(); if(!termo){ render(); } }catch(e){}}
+function converterDados(data){ return data.map(c=>{ let comps=[]; try{ comps=JSON.parse(c.COMPROVANTES_JSON||'[]'); }catch(e){ comps=[]; } return { id:String(c.ID||c.id), tipoCliente:c.TIPO_CLIENTE||c.tipoCliente||'Pessoa Física', situacao:c.SITUACAO||c.situacao||'Concretizada', canal:c.CANAL||c.canal||'Presencial', vendedor:c.VENDEDOR||c.vendedor||'Leonardo', nome:c.NOME||c.nome, rg:c.RG||c.rg||'', cpf:c.CPF_CNPJ||c.cpf, nasc: normalizaData(c.NASC||c.nasc||''), dataCad: normalizaData(c.DATA_CAD||c.dataCad||''), email:c.EMAIL||c.email||'', zap:c.ZAP||c.zap||'', endereco:c.ENDERECO||c.endereco||'', complemento:c.COMPLEMENTO||c.complemento||'', bairro:c.BAIRRO||c.bairro||'', cidade:c.CIDADE||c.cidade||'Ananindeua', estado:c.ESTADO||c.estado||'PA', vencimento:c.DIA_VENCIMENTO||c.VENCIMENTO||c.vencimento||'10', valor:c.VALOR||c.valor||'0', tipoPag:c.TIPO_PAG||c.tipoPag||'À vista', formaPag:c.FORMA_PAG||c.formaPag||'Pix', qtdDep:c.QTD_DEP||c.qtdDep||'0', dependentes:c.DEPENDENTES? (typeof c.DEPENDENTES==='string'? c.DEPENDENTES.split(' | ').filter(Boolean):c.DEPENDENTES):(c.dependentes||[]), obs:c.OBS||c.obs||'', pagamento:c.PAGAMENTO||c.pagamento||'Não', fotoUrl:c.FOTO_URL||c.fotoUrl||`https://i.pravatar.cc/150?u=${c.ID||c.id}`, fotoDriveId:c.FOTO_DRIVE_ID||'', comprovantes:comps, ultimoEmail:c.ULTIMO_EMAIL_ENVIADO||'' }; }); }
+function carregarLocal(){ try{ clientes=JSON.parse(localStorage.getItem('clientes_final')||'[]'); }catch(e){ clientes=[]; } render(); }
+async function testarEmailCobranca(){const email=$('fEmail').value.trim(), nome=$('fNome').value.trim()||'Cliente', dia=$('fVenc').value.trim(), valor=$('fValor').value.trim()||'0'; if(!email || email.indexOf('@')===-1){ alert('Email inválido!'); return; } if(!dia){ alert('Digite dia!'); return; } const url=getUrl(); if(!url){ alert('Cole PLANILHA_URL'); return; } $('btnTesteEmail').innerHTML='Enviando...'; $('btnTesteEmail').disabled=true; $('statusEmail').innerText='Enviando para '+email+'...'; $('statusEmail').className='text-warning'; try{ const urlTeste = url + '?action=testarEmail&email=' + encodeURIComponent(email) + '&nome=' + encodeURIComponent(nome) + '&dia=' + encodeURIComponent(dia) + '&valor=' + encodeURIComponent(valor) + '&t=' + Date.now(); const r = await fetch(urlTeste); const j = await r.json(); if(j.ok){ $('btnTesteEmail').innerHTML='Enviado!'; $('statusEmail').innerHTML='✓ Enviado para <b>'+email+'</b>'; $('statusEmail').className='text-success'; } else{ $('statusEmail').innerText='Erro: '+(j.error||''); $('statusEmail').className='text-danger'; $('btnTesteEmail').disabled=false; } }catch(e){ $('statusEmail').innerText='Erro: '+e.message; $('statusEmail').className='text-danger'; $('btnTesteEmail').disabled=false; } setTimeout(()=>{ $('btnTesteEmail').innerHTML='<i class="bi bi-envelope-check"></i> Testar'; $('btnTesteEmail').disabled=false; },4000);}
+function abrirGaleria(lista, idx){ if(!lista||!lista.length) return; gal=lista; idxGaleria=idx||0; atualizarGaleria(); $('lightbox').classList.add('show'); zoomV=1; aplicarZoom(); }
+function atualizarGaleria(){ if(!gal.length) return; const it=gal[idxGaleria]; $('lightboxImg').src=it.viewUrl||it.url||it.direct||it; $('infoLb').innerText=(it.nome||'')+' - '+(it.data||''); $('contLb').innerText=(idxGaleria+1)+'/'+gal.length; $('btnAnt').style.visibility=gal.length>1?'visible':'hidden'; $('btnProx').style.visibility=gal.length>1?'visible':'hidden'; let h=''; gal.forEach((c,i)=>{ h+=`<img src="${c.url||c}" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:${i===idxGaleria?'3px solid #FF6A00':'1px solid #333'};cursor:pointer;opacity:${i===idxGaleria?'1':'.6'}" onclick="irLb(${i})">`; }); $('miniLb').innerHTML=h; }
+function navLb(d){ idxGaleria=(idxGaleria+d+gal.length)%gal.length; atualizarGaleria(); } function irLb(i){ idxGaleria=i; atualizarGaleria(); } function fecharLb(){ $('lightbox').classList.remove('show'); } function zoomLb(v){ zoomV=Math.min(5,Math.max(0.5,zoomV+v)); aplicarZoom(); } function aplicarZoom(){ $('lightboxImg').style.transform=`scale(${zoomV})`; $('zoomL').innerText=Math.round(zoomV*100)+'%'; }
+function gerarDeps(){ const q=parseInt($('fQtdDep').value)||0; let h=''; if(q>0){ h='<div class="section-title">Dependentes até 5</div><div class="row g-2">'; for(let i=1;i<=q;i++){ h+=`<div class="col-12 col-md-6"><label class="small">Dependente ${i}</label><input id="fDep${i}" class="form-control"></div>`; } h+='</div>'; } $('areaDeps').innerHTML=h; }
+function abrirNovo(){ if(modo==='adm') return; $('formCad').reset(); $('fId').value=''; $('fFotoUrl').value=''; $('fFotoId').value=''; $('fCompsJson').value='[]'; compsTemp=[]; fotoB64=null; $('prevFoto').innerHTML=''; $('prevComps').innerHTML=''; $('listaComps').innerHTML=''; $('areaDeps').innerHTML=''; $('viewAdm').classList.add('d-none'); $('formCad').classList.remove('d-none'); $('modalContent').style.background=''; $('fCad').valueAsDate=new Date(); $('titModal').innerText='Novo Cliente'; getModal().show(); }
+$('fFotoFile').addEventListener('change', async e=>{ const file=e.target.files[0]; if(!file) return; fotoB64=await toB64(file); $('prevFoto').innerHTML=`<img src="${fotoB64}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:2px solid #FF6A00">`; });
+$('fCompFile').addEventListener('change', async e=>{ const files=[...e.target.files]; for(let f of files){ compsTemp.push({id:Date.now()+Math.random(),url:await toB64(f),data:new Date().toLocaleDateString('pt-BR'),nome:'Novo'}); } renderTemp(); });
+function renderTemp(){ let h=''; compsTemp.forEach((c,i)=>{ h+=`<div style="position:relative"><img src="${c.url}" style="width:70px;height:70px;object-fit:cover;border-radius:8px"><button style="position:absolute;top:-6px;right:-6px;background:red;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px" onclick="compsTemp.splice(${i},1);renderTemp()">x</button></div>`; }); $('prevComps').innerHTML=h; }
+function toB64(file){ return new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(file); }); }
+
+function imprimirFicha(id){
+  const c=clientes.find(x=>String(x.id)===String(id)); if(!c) { alert('Selecione um cadastro com ID'); return; }
+  const w=window.open('','_blank','width=900,height=1200');
+  w.document.write(`
+  <html><head><meta charset="utf-8"><title>Ficha ${c.nome} - A4 Elegante</title>
+  <style>
+    @page{size:A4;margin:10mm}
+    body{font-family:Inter,Arial,sans-serif;color:#111;background:#fff;margin:0;padding:0}
+   .topo{display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #FF6A00;padding:14px 20px;background:linear-gradient(90deg,#fff,#fff8f0)}
+   .topo h2{margin:0;color:#111;font-size:22px;letter-spacing:-.5px}.topo small{color:#666;font-size:11px}
+   .container{padding:16px 20px}
+   .sec{background:linear-gradient(90deg, rgba(255,106,0,.14), transparent);border-left:4px solid #FF6A00;padding:7px 12px;font-weight:800;font-size:11px;text-transform:uppercase;margin:20px 0 10px 0;letter-spacing:1px;color:#111}
+   .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+   .item{border:1px solid #e6e6e6;border-radius:10px;padding:10px 12px;background:#fcfcfc}
+   .item b{display:block;font-size:9px;color:#FF6A00;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+   .item span{font-size:13px;color:#111;word-break:break-word}
+   .foto{width:130px;height:130px;border-radius:16px;border:3px solid #FF6A00;object-fit:cover;background:#eee}
+   .obs{min-height:70px;white-space:pre-wrap}
+   .footer{margin-top:24px;border-top:2px solid #FF6A00;padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:#555}
+   .badge{display:inline-block;padding:5px 10px;border-radius:20px;font-size:10px;color:#fff;font-weight:700}
+   .bg-green{background:#16a34a}.bg-orange{background:#FF6A00}.bg-blue{background:#2563eb}.bg-red{background:#dc2626}.bg-dark{background:#111}
+   .no-print{text-align:center;margin:20px}
+   .btn-print{background:#FF6A00;color:#fff;border:none;padding:12px 28px;border-radius:30px;font-weight:800;cursor:pointer;font-size:14px;margin:6px}
+   .btn-close{background:#222;color:#fff;border:none;padding:12px 24px;border-radius:30px;font-weight:600;cursor:pointer;margin:6px}
+    @media print{.no-print{display:none!important} body{background:#fff} }
+  </style></head><body>
+  <div class="topo">
+    <div><h2><span style="color:#FF6A00">GESTÃO</span> LEONARDO AMARAL</h2><small>Dados para Impressão</small><br><small>Cachoeira do Ararí - Pará - ${new Date().toLocaleDateString('pt-BR')}</small></div>
+    <div style="text-align:right"><small>ID: ${c.id}</small><br><span class="badge ${c.situacao==='Concretizada'?'bg-green':'bg-orange'}">${c.situacao}</span> <span class="badge ${c.pagamento==='Sim'?'bg-blue':'bg-red'}">${c.pagamento==='Sim'?'✅ PAGO':'❌ INADIMPLENTE'}</span><br><small style="font-size:9px">Nasc: ${formataBR(c.nasc)} | Cad: ${formataBR(c.dataCad)}</small></div>
+  </div>
+  <div class="container">
+    <div class="sec">Classificação</div>
+    <div class="grid">
+      <div class="item"><b>Tipo Cliente</b><span>${c.tipoCliente}</span></div>
+      <div class="item"><b>Canal Venda</b><span>${c.canal}</span></div>
+      <div class="item"><b>Vendedor Responsável</b><span>${c.vendedor}</span></div>
+    </div>
+
+    <div class="sec">Dados Pessoais - Nascimento e Cadastro</div>
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <img src="${c.fotoUrl}" class="foto">
+      <div style="flex:1">
+        <div class="grid2">
+          <div class="item"><b>Nome Completo Titular</b><span>${c.nome}</span></div>
+          <div class="item"><b>CPF / CNPJ</b><span>${c.cpf}</span></div>
+          <div class="item"><b>RG Documento</b><span>${c.rg||'-'}</span></div>
+          <div class="item"><b>Data Nascimento</b><span>${formataBR(c.nasc)}</span></div>
+          <div class="item"><b>Data Cadastro Sistema</b><span>${formataBR(c.dataCad)}</span></div>
+          <div class="item"><b>Email Cobrança</b><span>${c.email||'-'}</span></div>
+          <div class="item"><b>WhatsApp</b><span>${c.zap||'-'}</span></div>
+          <div class="item"><b>Endereço Completo</b><span>${c.endereco} ${c.complemento} - ${c.bairro} - ${c.cidade}/${c.estado}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">Endereço Detalhado</div>
+    <div class="grid">
+      <div class="item"><b>Rua / Av</b><span>${c.endereco||'-'}</span></div>
+      <div class="item"><b>Complemento</b><span>${c.complemento||'-'}</span></div>
+      <div class="item"><b>Bairro</b><span>${c.bairro||'-'}</span></div>
+      <div class="item"><b>Cidade</b><span>${c.cidade||'-'}</span></div>
+      <div class="item"><b>UF Estado</b><span>${c.estado||'-'}</span></div>
+      <div class="item"><b>Endereço Formatado</b><span>${c.endereco} ${c.bairro} ${c.cidade}/${c.estado}</span></div>
+    </div>
+
+    <div class="sec">Financeiro Mensal</div>
+    <div class="grid">
+      <div class="item"><b>Dia Vencimento Todo Mês</b><span>Todo dia ${c.vencimento}</span></div>
+      <div class="item"><b>Valor Mensal</b><span>R$ ${c.valor}</span></div>
+      <div class="item"><b>Tipo Pagamento</b><span>${c.tipoPag}</span></div>
+      <div class="item"><b>Forma Pagamento</b><span>${c.formaPag}</span></div>
+      <div class="item"><b>Status Pagamento</b><span>${c.pagamento==='Sim'?'PAGO':'INADIMPLENTE'}</span></div>
+      <div class="item"><b>Último Email Automático</b><span>${c.ultimoEmail||'Nunca enviado'}</span></div>
+    </div>
+
+    <div class="sec">Dependentes</div>
+    <div class="grid2">
+      <div class="item"><b>Qtd Dependentes</b><span>${c.qtdDep} até 5</span></div>
+      ${c.dependentes && c.dependentes.length? c.dependentes.map((d,i)=>`<div class="item"><b>Dependente ${i+1} Nome Completo</b><span>${d}</span></div>`).join('') : '<div class="item"><b>Dependentes</b><span>Nenhum dependente cadastrado</span></div>'}
+    </div>
+
+    <div class="sec">Observação Final</div>
+    <div class="item obs"><b>Observação Final Cadastrada</b><span>${c.obs||'Nenhuma observação cadastrada'}</span></div>
+
+    <div class="sec">Comprovantes - ${c.comprovantes.length} arquivos - Fotos</div>
+    <div class="grid">
+      ${c.comprovantes.map((co,i)=>`<div class="item" style="text-align:center"><b>Comprovante ${i+1} - ${co.data}</b><br><img src="${co.url}" style="width:100%;height:110px;object-fit:cover;border-radius:8px;margin:6px 0"><br><span style="font-size:10px">Nome: ${co.nome||c.nome}<br>Data: ${co.data}<br>ID: ${String(co.id).substring(0,16)}...</span></div>`).join('') || '<div class="item"><span>Nenhum comprovante</span></div>'}
+    </div>
+
+    <div class="footer">
+      <span>Gestão Leonardo Amaral - Ficha gerada em ${new Date().toLocaleString('pt-BR')} </span>
+      <span> ${c.email||'cliente'}
+      - Assinatura: _______________________</span>
+    </div>
+  </div>
+  <div class="no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Agora</button> <button class="btn-close" onclick="window.close()">Fechar</button></div>
+  </body></html>`);
+  w.document.close();
+  setTimeout(()=>{ w.focus(); },500);
+}
+
+function render(){
+  const termo=($('busca').value||'').toLowerCase().trim();
+  const buscaEl=$('busca'); const contadorEl=$('contadorBusca'); const btnLimpar=$('btnLimparBusca');
+  let htmlTable=''; let htmlMobile='';
+  let filtrados=clientes;
+  if(termo){ filtrados=clientes.filter(c=>{ const nome=(c.nome||'').toLowerCase(); const cpf=(c.cpf||'').toLowerCase().replace(/[\.\-\/]/g,''); const termoLimpo=termo.replace(/[\.\-\/]/g,''); return nome.includes(termo) || cpf.includes(termoLimpo) || (c.email||'').toLowerCase().includes(termo); }); buscaEl.classList.add('neon-active'); btnLimpar.classList.remove('d-none'); contadorEl.innerText= filtrados.length? `🔍 ${filtrados.length} neon` : 'Nenhum'; contadorEl.className='badge bg-warning text-dark'; } else { buscaEl.classList.remove('neon-active'); btnLimpar.classList.add('d-none'); contadorEl.innerText=''; }
+  filtrados.forEach(c=>{
+    const dia=c.vencimento? `Dia ${c.vencimento}` : '--'; const qtd=(c.comprovantes||[]).length;
+    let comps=''; (c.comprovantes||[]).slice(0,3).forEach((co,i)=>{ comps+=`<img src="${co.url}" class="img-comp" onclick="abrirGaleriaCliente('${c.id}',${i})">`; });
+    const classeNeon = termo? 'neon-found' : '';
+    if(modo==='adm'){ htmlTable+=`<tr class="${classeNeon}" style="background:#000;color:#fff"><td><img src="${c.fotoUrl}" class="img-thumb" onclick="abrirGaleria([{url:'${c.fotoUrl}'}],0)"></td><td style="text-align:left"><b>${c.nome}</b><br><small style="font-size:11px">${c.cpf}<br>${c.email||''}<br>Nasc: ${formataBR(c.nasc)} | Cad: ${formataBR(c.dataCad)}</small></td><td>${dia}<br><b>R$ ${c.valor}</b></td><td><span class="badge ${c.situacao==='Concretizada'?'bg-success':'bg-warning text-dark'}">${c.situacao}</span></td><td><span class="badge ${c.pagamento==='Sim'?'bg-primary':'bg-danger'}">${c.pagamento==='Sim'?'PAGO':'INADIM'}</span></td><td>${comps}<br><span class="badge bg-dark border" style="font-size:9px">${qtd}</span></td><td><button class="btn btn-sm btn-warning rounded-pill" onclick="verCliente('${c.id}')"><i class="bi bi-eye"></i></button></td></tr>`; }
+    else{ htmlTable+=`<tr class="${classeNeon}"><td><img src="${c.fotoUrl}" class="img-thumb" onclick="abrirGaleria([{url:'${c.fotoUrl}'}],0)"></td><td style="text-align:left"><b>${c.nome}</b><br><small style="font-size:11px">${c.cpf}<br>${c.email||''}<br>Nasc: ${formataBR(c.nasc)} | Cad: ${formataBR(c.dataCad)}</small></td><td>${dia}<br><b>R$ ${c.valor}</b></td><td><button class="btn btn-sm ${c.situacao==='Concretizada'?'bg-success':'bg-warning text-dark'} rounded-pill" style="font-size:11px" onclick="toggleSitu('${c.id}')">${c.situacao==='Concretizada'?'CONC':'AGUARD'}</button></td><td><button class="btn btn-sm ${c.pagamento==='Sim'?'bg-primary':'bg-danger'} rounded-pill" style="font-size:11px" onclick="togglePago('${c.id}')">${c.pagamento==='Sim'?'PAGO':'INADIM'}</button></td><td>${comps}<br><button class="btn btn-sm btn-primary rounded-pill mt-1" style="font-size:9px" onclick="addRapido('${c.id}')">+ Add</button></td><td><div class="btn-group btn-group-sm"><button class="btn btn-dark border" onclick="verCliente('${c.id}')"><i class="bi bi-eye"></i></button><button class="btn btn-dark border" onclick="editarCliente('${c.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-dark border text-danger" onclick="deletarCliente('${c.id}')"><i class="bi bi-trash"></i></button></div></td></tr>`; }
+    let acoesMobile=''; if(modo==='adm'){ acoesMobile=`<button class="btn btn-warning btn-sm rounded-pill w-100 mt-2" onclick="verCliente('${c.id}')"><i class="bi bi-eye"></i> Ver separado + Imprimir A4</button>`; } else{ acoesMobile=`<div class="d-flex gap-2 mt-2"><button class="btn btn-dark border btn-sm flex-fill" onclick="verCliente('${c.id}')"><i class="bi bi-eye"></i></button><button class="btn btn-dark border btn-sm flex-fill" onclick="editarCliente('${c.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-light btn-sm flex-fill" onclick="imprimirFicha('${c.id}')"><i class="bi bi-printer"></i></button><button class="btn btn-dark border btn-sm flex-fill text-danger" onclick="deletarCliente('${c.id}')"><i class="bi bi-trash"></i></button></div>`; }
+    htmlMobile+=`<div class="card-cliente-mobile ${classeNeon}"><div class="d-flex gap-2 align-items-center"><img src="${c.fotoUrl}" class="img-thumb" onclick="abrirGaleria([{url:'${c.fotoUrl}'}],0)"><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nome}</div><div style="font-size:11px;color:#aaa;word-break:break-all">${c.cpf}<br>${c.email||''}<br>Nasc: ${formataBR(c.nasc)} | Cad: ${formataBR(c.dataCad)}</div></div></div><div class="d-flex gap-2 flex-wrap mt-2"><span class="badge ${c.situacao==='Concretizada'?'bg-success':'bg-warning text-dark'}" style="font-size:10px">${c.situacao}</span><span class="badge ${c.pagamento==='Sim'?'bg-primary':'bg-danger'}" style="font-size:10px">${c.pagamento==='Sim'?'PAGO':'INADIM'}</span><span class="badge bg-dark border" style="font-size:10px">${qtd} comps</span></div><div class="d-flex flex-wrap gap-1 mt-2">${comps}</div>${acoesMobile}</div>`;
+  });
+  $('tabela').innerHTML=htmlTable||`<tr><td colspan="7" class="text-secondary py-4">Nenhum cliente</td></tr>`; $('cardsMobile').innerHTML=htmlMobile||`<div class="text-center text-secondary py-4">Nenhum encontrado</div>`;
+  $('tTotal').innerText=clientes.length; $('tConc').innerText=clientes.filter(c=>c.situacao==='Concretizada').length; $('tAguard').innerText=clientes.filter(c=>c.situacao==='Aguardando Confirmação').length; $('tPagos').innerText=clientes.filter(c=>c.pagamento==='Sim').length; $('tInad').innerText=clientes.filter(c=>c.pagamento!=='Sim').length;
+}
+function abrirGaleriaCliente(id,idx){ const c=clientes.find(x=>String(x.id)===String(id)); if(!c) return; abrirGaleria((c.comprovantes||[]).map(co=>({...co,nome:c.nome})),idx); }
+function toggleSitu(id){ if(modo==='adm') return; const c=clientes.find(x=>String(x.id)===String(id)); c.situacao=c.situacao==='Concretizada'?'Aguardando Confirmação':'Concretizada'; salvarLocalToggle(id,'SITUACAO'); }
+function togglePago(id){ if(modo==='adm') return; const c=clientes.find(x=>String(x.id)===String(id)); c.pagamento=c.pagamento==='Sim'?'Não':'Sim'; salvarLocalToggle(id,'PAGAMENTO'); }
+function salvarLocalToggle(id,campo){ localStorage.setItem('clientes_final', JSON.stringify(clientes)); render(); const url=getUrl(); if(url){ fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify({acao:'toggle', id:id, campo:campo})}); } }
+function addRapido(id){ if(modo==='adm') return; const c=clientes.find(x=>String(x.id)===String(id)); $('fId').value=c.id; $('fFotoUrl').value=c.fotoUrl; $('fFotoId').value=c.fotoDriveId||''; $('fCompsJson').value=JSON.stringify(c.comprovantes||[]); $('fTipo').value=c.tipoCliente; $('fSitu').value=c.situacao; $('fCanal').value=c.canal; $('fVend').value=c.vendedor; $('fNome').value=c.nome; $('fCpf').value=c.cpf; $('fVenc').value=c.vencimento; $('fValor').value=c.valor; $('fQtdDep').value=c.qtdDep; $('fObs').value=c.obs; $('fEmail').value=c.email; $('fNasc').value=c.nasc; $('fCad').value=c.dataCad; gerarDeps(); compsTemp=[...(c.comprovantes||[])]; fotoB64=null; $('prevFoto').innerHTML=`<img src="${c.fotoUrl}" style="width:80px;height:80px;object-fit:cover;border-radius:10px">`; renderLista(c); $('viewAdm').classList.add('d-none'); $('formCad').classList.remove('d-none'); $('modalContent').style.background=''; $('titModal').innerText='Add Comprovantes'; getModal().show(); }
+function renderLista(c){ let h='<div class="section-title">Comprovantes</div><div class="d-flex flex-wrap gap-2">'; (c.comprovantes||[]).forEach((co,i)=>{ h+=`<div style="position:relative"><img src="${co.url}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer" onclick="abrirGaleriaCliente('${c.id}',${i})"><button style="position:absolute;top:-6px;right:-6px;background:red;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px" onclick="removerComp('${c.id}',${i})">x</button><br><small style="font-size:10px">${co.data}</small></div>`; }); h+='</div>'; $('listaComps').innerHTML=h; $('prevComps').innerHTML=''; }
+function removerComp(cid, idx){ if(modo==='adm') return; const c=clientes.find(x=>String(x.id)===String(cid)); const driveId=c.comprovantes[idx]?.id; c.comprovantes.splice(idx,1); localStorage.setItem('clientes_final', JSON.stringify(clientes)); renderLista(c); render(); const url=getUrl(); if(url&&driveId){ fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify({acao:'removerComp', idCliente:cid, driveId:driveId})}); } }
+
+function verCliente(id){
+  const c=clientes.find(x=>String(x.id)===String(id)); if(!c) return;
+  if(modo==='adm'){
+    $('formCad').classList.add('d-none'); $('viewAdm').classList.remove('d-none'); $('btnSalvar').style.display='none'; $('modalContent').style.background='#000000';
+    let h=`<div class="text-center mb-3"><span class="badge bg-primary rounded-pill px-3 py-2" style="font-size:11px"><i class="bi bi-person-badge"></i> DADOS DE CADASTRO</span><br><small class="text-secondary mt-2 d-block" style="font-size:10px">ID: ${c.id} | Nasc: ${formataBR(c.nasc)} | Cad: ${formataBR(c.dataCad)} </small></div>`;
+
+    h+=`<div class="section-title">Classificação</div><div class="row g-2">
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Tipo Cliente</b><span>${c.tipoCliente}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Situação Cadastro</b><span>${c.situacao}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Canal Venda</b><span>${c.canal}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Vendedor</b><span>${c.vendedor}</span></div></div>
+    </div>`;
+
+    h+=`<div class="section-title">Dados Pessoais</div><div class="row g-2">
+      <div class="col-12 col-md-6"><div class="dado-adm"><b>Nome Completo</b><span>${c.nome}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>RG</b><span>${c.rg||'-'}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>CPF / CNPJ</b><span>${c.cpf}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Data Nascimento</b><span>${formataBR(c.nasc)}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Data Cadastro</b><span>${formataBR(c.dataCad)}</span></div></div>
+      <div class="col-12 col-md-6"><div class="dado-adm"><b>Email Cobrança</b><span>${c.email||'-'}</span></div></div>
+      <div class="col-12 col-md-6"><div class="dado-adm"><b>WhatsApp</b><span>${c.zap||'-'}</span></div></div>
+    </div>`;
+
+    h+=`<div class="section-title">Endereço</div><div class="row g-2">
+      <div class="col-12 col-md-6"><div class="dado-adm"><b>Endereço Rua</b><span>${c.endereco||'-'}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Complemento</b><span>${c.complemento||'-'}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Bairro</b><span>${c.bairro||'-'}</span></div></div>
+      <div class="col-6 col-md-3"><div class="dado-adm"><b>Cidade</b><span>${c.cidade||'-'}</span></div></div>
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>UF</b><span>${c.estado||'-'}</span></div></div>
+      <div class="col-12 col-md-7"><div class="dado-adm"><b>Endereço Completo</b><span>${c.endereco} ${c.complemento} - ${c.bairro} - ${c.cidade}/${c.estado}</span></div></div>
+    </div>`;
+
+    h+=`<div class="section-title">Financeiro</div><div class="row g-2">
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>Dia Vencimento</b><span>Todo dia ${c.vencimento}</span></div></div>
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>Valor Mensal</b><span>R$ ${c.valor}</span></div></div>
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>Tipo Pag</b><span>${c.tipoPag}</span></div></div>
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>Forma Pag</b><span>${c.formaPag}</span></div></div>
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>Status</b><span>${c.pagamento==='Sim'?'✅ PAGO':'❌ INADIMPLENTE'}</span></div></div>
+      <div class="col-6 col-md-2"><div class="dado-adm"><b>Último Email</b><span>${c.ultimoEmail||'Nunca'}</span></div></div>
+    </div>`;
+
+    h+=`<div class="section-title">Dependentes</div><div class="row g-2">`;
+    h+=`<div class="col-6 col-md-2"><div class="dado-adm"><b>Qtd Dependentes</b><span>${c.qtdDep}</span></div></div>`;
+    if(c.dependentes && c.dependentes.length){
+      c.dependentes.forEach((d,i)=>{ h+=`<div class="col-12 col-md-5"><div class="dado-adm"><b>Dependente ${i+1}</b><span>${d}</span></div></div>`; });
+    }else{
+      h+=`<div class="col-12 col-md-10"><div class="dado-adm"><b>Dependentes</b><span>Nenhum</span></div></div>`;
+    }
+    h+=`</div>`;
+
+    h+=`<div class="section-title">Foto Titular</div><div class="row g-2"><div class="col-12 text-center"><div class="dado-adm" style="text-align:center"><b>Foto Titular - Clique ampliar</b><br><img src="${c.fotoUrl}" style="width:200px;height:200px;object-fit:cover;border-radius:18px;border:3px solid #FF6A00;cursor:pointer;margin-top:10px" onclick="abrirGaleria([{url:'${c.fotoUrl}',nome:'${c.nome}'}],0)"><br><span style="font-size:11px;color:#aaa">${c.nome}</span></div></div></div>`;
+
+    h+=`<div class="section-title">Comprovantes</div><div class="row g-2">`;
+    if(c.comprovantes && c.comprovantes.length){
+      c.comprovantes.forEach((co,i)=>{ h+=`<div class="col-6 col-md-4"><div class="dado-adm" style="text-align:center"><b>Comp ${i+1} - ${co.data}</b><img src="${co.url}" style="width:100%;height:140px;object-fit:cover;border-radius:10px;cursor:pointer;border:2px solid #0d6efd;margin-top:6px" onclick="abrirGaleriaCliente('${c.id}',${i})"><span style="font-size:11px;display:block;margin-top:6px">${co.nome||c.nome} - ${co.data}</span></div></div>`; });
+    }else{ h+=`<div class="col-12"><div class="dado-adm"><b>Comprovantes</b><span>Nenhum</span></div></div>`; }
+    h+=`</div>`;
+
+    h+=`<div class="section-title">Observação Final</div><div class="row g-2"><div class="col-12"><div class="dado-adm"><b>Observação Final Completa</b><span style="white-space:pre-wrap;min-height:50px;display:block">${c.obs||'Nenhuma observação'}</span></div></div></div>`;
+
+    // BOTÃO IMPRIMIR ABAIXO DE OBSERVAÇÕES - ADM
+    h+=`<div class="section-title" style="background:linear-gradient(90deg, rgba(255,255,255,.1), transparent);border-left-color:#fff">🖨️ IMPRIMIR</div>
+    <div class="d-flex gap-2 flex-wrap mt-2 mb-2">
+      <button class="btn btn-light rounded-pill px-4 fw-bold" style="font-size:14px" onclick="imprimirFicha('${c.id}')"><i class="bi bi-printer-fill"></i> Imprimir Ficha</button>
+      <button class="btn btn-dark border rounded-pill px-4" onclick="imprimirFicha('${c.id}')"><i class="bi bi-file-earmark-text"></i> Visualizar Impressão</button>
+    </div>
+    <small class="text-secondary" style="font-size:10px">Suporte: indioinformaticaoficial@gmail.com</small>`;
+
+    $('viewAdm').innerHTML=h; $('titModal').innerText='CLIENTE - '+c.nome+' - DADOS PESSOAIS';
+  }else{
+    // CLIENTE - também com cada info separada + imprimir abaixo obs
+    $('viewAdm').classList.add('d-none'); $('formCad').classList.remove('d-none'); $('modalContent').style.background=''; $('btnSalvar').style.display='inline-block';
+    $('fId').value=c.id; $('fTipo').value=c.tipoCliente; $('fSitu').value=c.situacao; $('fCanal').value=c.canal; $('fVend').value=c.vendedor; $('fNome').value=c.nome; $('fRG').value=c.rg; $('fCpf').value=c.cpf; $('fNasc').value=c.nasc; $('fCad').value=c.dataCad; $('fEmail').value=c.email; $('fZap').value=c.zap; $('fEnd').value=c.endereco; $('fComplemento').value=c.complemento; $('fBairro').value=c.bairro; $('fCid').value=c.cidade; $('fUF').value=c.estado; $('fVenc').value=c.vencimento; $('fValor').value=c.valor; $('fTipoPag').value=c.tipoPag; $('fFormaPag').value=c.formaPag; $('fQtdDep').value=c.qtdDep; $('fObs').value=c.obs;
+    gerarDeps(); if(c.dependentes){ c.dependentes.forEach((n,i)=>{ const el=document.getElementById('fDep'+(i+1)); if(el) el.value=n; }); }
+    fotoB64=null; compsTemp=[...(c.comprovantes||[])]; $('fFotoUrl').value=c.fotoUrl; $('fFotoId').value=c.fotoDriveId||''; $('fCompsJson').value=JSON.stringify(c.comprovantes||[]); $('prevFoto').innerHTML=`<img src="${c.fotoUrl}" style="width:80px;height:80px;object-fit:cover;border-radius:10px">`; renderLista(c);
+    // Adiciona botão imprimir abaixo da observação no form cliente também já está no HTML do form - mas reforça aqui no título
+    $('titModal').innerText='CLIENTE: '+c.nome+' - DADOS CADASTRAIS';
+  }
+  getModal().show();
+}
+function editarCliente(id){ if(modo==='adm') return; verCliente(id); }
+function deletarCliente(id){ if(modo==='adm') return; if(!confirm('Excluir Cadastro?')) return; clientes=clientes.filter(c=>String(c.id)!==String(id)); localStorage.setItem('clientes_final', JSON.stringify(clientes)); render(); const url=getUrl(); if(url){ fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify({acao:'excluir', id:id})}); } }
+async function salvar(){
+  if(modo==='adm') return;
+  const id=$('fId').value; const existente=id?clientes.find(c=>String(c.id)===String(id)):null;
+  const qtd=parseInt($('fQtdDep').value)||0; const deps=[]; for(let i=1;i<=qtd;i++){ const el=document.getElementById('fDep'+i); if(el?.value) deps.push(el.value); }
+  let todosComps=existente?[...(existente.comprovantes||[])]:[]; compsTemp.forEach(ct=>{ if(!todosComps.find(e=>e.url===ct.url)) todosComps.push(ct); });
+  const payload={id:id||Date.now().toString(),tipoCliente:$('fTipo').value,situacao:$('fSitu').value,canal:$('fCanal').value,vendedor:$('fVend').value,nome:$('fNome').value,rg:$('fRG').value,cpf:$('fCpf').value,nasc:$('fNasc').value,dataCad:$('fCad').value,email:$('fEmail').value,zap:$('fZap').value,endereco:$('fEnd').value,complemento:$('fComplemento').value,bairro:$('fBairro').value,cidade:$('fCid').value,estado:$('fUF').value,vencimento:$('fVenc').value,valor:$('fValor').value,tipoPag:$('fTipoPag').value,formaPag:$('fFormaPag').value,qtdDep:$('fQtdDep').value,dependentes:deps,obs:$('fObs').value,pagamento:existente?.pagamento||'Não',fotoUrl:fotoB64||existente?.fotoUrl||`https://i.pravatar.cc/150?u=${id||Date.now()}`,fotoDriveId:existente?.fotoDriveId||'',comprovantes:todosComps};
+  if(id){ const i=clientes.findIndex(c=>String(c.id)===String(id)); clientes[i]=payload; } else { clientes.push(payload); }
+  localStorage.setItem('clientes_final', JSON.stringify(clientes));
+  const url=getUrl();
+  if(url){ $('btnSalvar').innerHTML='Enviando...'; $('btnSalvar').disabled=true; const dados={acao:'salvar', ID:payload.id, TIPO_CLIENTE:payload.tipoCliente, SITUACAO:payload.situacao, CANAL:payload.canal, VENDEDOR:payload.vendedor, NOME:payload.nome, RG:payload.rg, CPF_CNPJ:payload.cpf, NASC:payload.nasc, DATA_CAD:payload.dataCad, EMAIL:payload.email, ZAP:payload.zap, ENDERECO:payload.endereco, COMPLEMENTO:payload.complemento, BAIRRO:payload.bairro, CIDADE:payload.cidade, ESTADO:payload.estado, DIA_VENCIMENTO:payload.vencimento, VENCIMENTO:payload.vencimento, VALOR:payload.valor, TIPO_PAG:payload.tipoPag, FORMA_PAG:payload.formaPag, QTD_DEP:payload.qtdDep, DEPENDENTES:deps, OBS:payload.obs, PAGAMENTO:payload.pagamento, FOTO_URL:$('fFotoUrl').value, FOTO_DRIVE_ID:$('fFotoId').value, COMPROVANTES_JSON_EXISTENTES:$('fCompsJson').value, FOTO_BASE64:fotoB64, NOVOS_COMPROVANTES:compsTemp.filter(ct=>ct.url.startsWith('data:')).map(ct=>ct.url)}; try{ await fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify(dados)}); setTimeout(async()=>{ await sincronizarInicial(); getModal().hide(); $('btnSalvar').disabled=false; $('btnSalvar').innerHTML='Salvar na Planilha + Drive'; },1500); }catch(e){ getModal().hide(); render(); $('btnSalvar').disabled=false; } }else{ getModal().hide(); render(); } compsTemp=[]; fotoB64=null;
+}
+</script>
+</body>
+</html>
